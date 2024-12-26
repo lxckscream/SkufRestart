@@ -21,6 +21,16 @@ public final class Main extends JavaPlugin {
         instance = this;
         Configuration.load();
 
+        ArrayList<Plugin> plugins = new ArrayList<>();
+        Configuration.config.getStringList("plugin-disables").forEach(plugin -> {
+            Plugin pluginObj = getServer().getPluginManager().getPlugin(plugin);
+            if (pluginObj != null) plugins.add(pluginObj);
+            else {
+                getLogger().severe("Invalid plugin in list: " + plugin);
+                shutDown(false);
+            }
+        });
+
         ArrayList<TimeStamp> timeStamps = new ArrayList<>();
         Configuration.config.getStringList("time-stamps").forEach(timeStamp -> {
             TimeStamp timeStampObj = new TimeStamp();
@@ -38,16 +48,6 @@ public final class Main extends JavaPlugin {
                 }
             } else {
                 getLogger().severe("Invalid time format: " + timeStamp);
-                shutDown(false);
-            }
-        });
-
-        ArrayList<Plugin> plugins = new ArrayList<>();
-        Configuration.config.getStringList("plugin-disables").forEach(plugin -> {
-            Plugin pluginObj = getServer().getPluginManager().getPlugin(plugin);
-            if (pluginObj != null) plugins.add(pluginObj);
-            else {
-                getLogger().severe("Invalid plugin in list: " + plugin);
                 shutDown(false);
             }
         });
