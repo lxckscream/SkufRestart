@@ -34,9 +34,12 @@ public class RestartModel {
         bossBar = Bukkit.createBossBar(color(Configuration.config.getString("bossbar.string").replaceAll("%time%", String.valueOf(restartDelay))),
                 BarColor.valueOf(Configuration.config.getString("bossbar.color").toUpperCase()),
                 BarStyle.valueOf(Configuration.config.getString("bossbar.style").toUpperCase()));
+        Bukkit.getOnlinePlayers().forEach(bossBar::addPlayer);
+
         new BukkitRunnable() {
             @Override
             public void run() {
+                bossBar.setTitle(color(Configuration.config.getString("bossbar.string").replaceAll("%time%", String.valueOf(restartDelay))));
                 if (restartDelay <= 0) {
                     restart();
                 } else {

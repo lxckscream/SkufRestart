@@ -2,3 +2,5 @@ name: SkufRestart
 version: '${project.version}'
 main: ru.screamoov.skufrestart.Main
 api-version: '1.16'
+commands:
+  srestart:

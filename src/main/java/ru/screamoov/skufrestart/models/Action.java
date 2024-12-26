@@ -14,7 +14,7 @@ public class Action {
     public Action(String strAction) {
         Main.getInstance().getLogger().info("[ActionManager] Loading action: " + strAction);
         this.strAction = strAction;
-        String[] fimoz = strAction.split("->> ");
+        String[] fimoz = strAction.split("->>");
         String[] fimozik = fimoz[0].split(":");
         try {
             timeOnAction = Integer.parseInt(fimozik[0]);

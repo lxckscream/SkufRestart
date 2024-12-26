@@ -20,6 +20,16 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         instance = this;
         Configuration.load();
+        getCommand("srestart").setExecutor((commandSender, command, s, strings) -> {
+            if (commandSender.hasPermission("skufrestart")) {
+                if (strings[0].equalsIgnoreCase("restart")) {
+                    restartModel.start();
+                } else if (strings[0].equalsIgnoreCase("stop")) {
+                    restartModel.stop();
+                }
+            }
+            return true;
+        });
 
         ArrayList<TimeStamp> timeStamps = new ArrayList<>();
         Configuration.config.getStringList("time-stamps").forEach(timeStamp -> {
@@ -90,6 +100,7 @@ public final class Main extends JavaPlugin {
         if (disablePlugins) restartModel.disablingPlugins.forEach(getInstance().getPluginLoader()::disablePlugin);
         getInstance().getLogger().info("Goodbye! SkufRestart v1.0 by lxckScream");
         getInstance().getPluginLoader().disablePlugin(instance);
+        Bukkit.shutdown();
     }
 
     public static Main getInstance() {
