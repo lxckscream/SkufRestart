@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SkufRestart:jar">
+    <output-path>$USER_HOME$/Desktop/test/plugins</output-path>
+    <root id="archive" name="SkufRestart.jar">
+      <element id="module-output" name="SkufRestart" />
+    </root>
+  </artifact>
+</component>
