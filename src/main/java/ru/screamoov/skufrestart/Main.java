@@ -140,7 +140,6 @@ public final class Main extends JavaPlugin {
         if (disablePlugins) restartModel.disablingPlugins.forEach(getInstance().getPluginLoader()::disablePlugin);
         getInstance().getLogger().info("Goodbye! SkufRestart v1.0 by lxckScream");
         getInstance().getPluginLoader().disablePlugin(instance);
-        Bukkit.shutdown();
     }
 
     public static Main getInstance() {

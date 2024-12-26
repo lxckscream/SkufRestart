@@ -60,5 +60,6 @@ public class RestartModel {
 
     public void restart() {
         Main.shutDown(true);
+        Bukkit.shutdown();
     }
 }
