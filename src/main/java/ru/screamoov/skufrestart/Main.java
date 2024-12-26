@@ -26,6 +26,45 @@ public final class Main extends JavaPlugin {
                     restartModel.start();
                 } else if (strings[0].equalsIgnoreCase("stop")) {
                     restartModel.stop();
+                    ArrayList<TimeStamp> timeStamps = new ArrayList<>();
+                    Configuration.config.getStringList("time-stamps").forEach(timeStamp -> {
+                        TimeStamp timeStampObj = new TimeStamp();
+                        String[] fimozik = timeStamp.split(":");
+                        if (fimozik[0].length() == 2) {
+                            try {
+                                int hour = Integer.parseInt(fimozik[0]);
+                                int minute = Integer.parseInt(fimozik[1]);
+                                timeStampObj.hours = hour;
+                                timeStampObj.minutes = minute;
+                                timeStamps.add(timeStampObj);
+                            } catch (Exception e) {
+                                getLogger().severe("Invalid time format: " + timeStamp);
+                                shutDown(false);
+                            }
+                        } else {
+                            getLogger().severe("Invalid time format: " + timeStamp);
+                            shutDown(false);
+                        }
+                    });
+
+                    ArrayList<Plugin> plugins = new ArrayList<>();
+                    Configuration.config.getStringList("plugin-disables").forEach(plugin -> {
+                        Plugin pluginObj = getServer().getPluginManager().getPlugin(plugin);
+                        if (pluginObj != null) plugins.add(pluginObj);
+                        else {
+                            getLogger().severe("Invalid plugin in list: " + plugin);
+                            shutDown(false);
+                        }
+                    });
+
+                    ArrayList<Action> actions = new ArrayList<>();
+                    Configuration.config.getStringList("actions").forEach(action -> {
+                        Action actionObj = new Action(action);
+                        actions.add(actionObj);
+                    });
+
+                    int restartDelay = Configuration.config.getInt("restart-delay");
+                    restartModel = new RestartModel(timeStamps, plugins, actions, restartDelay);
                 }
             }
             return true;
